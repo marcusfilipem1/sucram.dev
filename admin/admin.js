@@ -53,6 +53,16 @@ export const adminHTML = () => `
         ${field("f-live", "Link do sistema online", `<input id="f-live" type="url" placeholder="https://…">`)}
         ${field("f-repo", "Link do código", `<input id="f-repo" type="url" placeholder="https://github.com/…">`)}
       </div>
+      <details class="en-box">
+        <summary>Versão em inglês (opcional)</summary>
+        <p class="hint">Aparece para quem vê o site em inglês. Em branco, o site mostra o texto em português.</p>
+        <div class="form-grid" style="margin-top:12px">
+          ${field("f-title-en", "Title", `<input id="f-title-en" placeholder="Management system for Bom Grão Bakery">`)}
+          ${field("f-client-en", "Client or industry", `<input id="f-client-en" placeholder="Bakery, clinic, auto parts store…">`)}
+          ${field("f-summary-en", "Summary", `<input id="f-summary-en" maxlength="180" placeholder="One sentence about the problem solved.">`)}
+          ${field("f-description-en", "Full description", `<textarea id="f-description-en"></textarea>`)}
+        </div>
+      </details>
       ${field("f-cover-file", "Imagem de capa", `<input id="f-cover-file" type="file" accept="image/*"><div class="imgs" data-cover></div>`)}
       ${field("f-gallery-file", "Galeria (prints das telas)", `<input id="f-gallery-file" type="file" accept="image/*" multiple><div class="imgs" data-gallery></div>`)}
       <label class="check" for="f-featured"><input type="checkbox" id="f-featured"> Destacar no topo da lista</label>
@@ -200,6 +210,8 @@ export function mountAdmin(root, opts = {}) {
     set("f-year", p.year || String(new Date().getFullYear())); set("f-status", p.status || "Em produção");
     set("f-summary", p.summary); set("f-description", p.description); set("f-stack", (p.stack || []).join(", "));
     set("f-live", p.liveUrl); set("f-repo", p.repoUrl);
+    set("f-title-en", p.en?.title); set("f-client-en", p.en?.client); set("f-summary-en", p.en?.summary); set("f-description-en", p.en?.description);
+    q(".en-box").open = !!(p.en && Object.values(p.en).some(Boolean));
     q("#f-featured").checked = !!p.featured;
     q("#f-cover-file").value = ""; q("#f-gallery-file").value = "";
     cover = p.cover ? { path: p.cover } : null;
@@ -230,6 +242,7 @@ export function mountAdmin(root, opts = {}) {
         status: q("#f-status").value, featured: q("#f-featured").checked, summary: v("f-summary"), description: v("f-description"),
         stack: v("f-stack").split(",").map((s) => s.trim()).filter(Boolean),
         cover: coverPath, gallery: galleryPaths, liveUrl: v("f-live"), repoUrl: v("f-repo"),
+        en: Object.fromEntries([["title", v("f-title-en")], ["client", v("f-client-en")], ["summary", v("f-summary-en")], ["description", v("f-description-en")]].filter(([, x]) => x)),
         createdAt: old.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString(),
       };
 
