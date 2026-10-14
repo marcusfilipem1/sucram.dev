@@ -1,0 +1,50 @@
+{
+  "name": "Marcus Filipe",
+  "handle": "sucram",
+  "role": "Desenvolvedor Full Stack",
+  "headlineStart": "Sistemas sob medida para",
+  "headlineEnd": "empresas e comércios.",
+  "bio": "Desenvolvo sistemas de gestão, PDVs, e-commerces e integrações que resolvem a rotina real do negócio: estoque, caixa, financeiro e atendimento.",
+  "about": "Cuido do projeto inteiro: entendo o processo da empresa, modelo o banco de dados, construo a API e a interface, coloco no ar e dou suporte depois da entrega.",
+  "available": true,
+  "location": "Maricá, RJ",
+  "email": "marcusmftom@gmail.com",
+  "whatsapp": "5521974893685",
+  "github": "https://github.com/marcusfilipem1",
+  "linkedin": "https://www.linkedin.com/in/marcus-filipe-mendes/",
+  "stack": [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Python",
+    "Java",
+    "PHP",
+    "HTML",
+    "CSS",
+    "SQL",
+    "PostgreSQL",
+    "MySQL",
+    "Docker"
+  ],
+  "services": [
+    {
+      "title": "Sistemas de gestão",
+      "text": "ERPs, estoque, financeiro, ordens de serviço e cadastros sob medida para a rotina da empresa."
+    },
+    {
+      "title": "Comércio e PDV",
+      "text": "Frente de caixa, e-commerce, catálogo online, meios de pagamento e emissão de NF-e e NFC-e."
+    },
+    {
+      "title": "Integrações e APIs",
+      "text": "APIs REST, webhooks e automações que conectam o sistema a bancos, marketplaces e ERPs."
+    },
+    {
+      "title": "Dashboards e relatórios",
+      "text": "Painéis com os indicadores do negócio e relatórios exportáveis para a contabilidade."
+    }
+  ],
+  "phoneDisplay": "(21) 97489-3685",
+  "formEndpoint": "https://formsubmit.co/ajax/marcusmftom@gmail.com"
+}
