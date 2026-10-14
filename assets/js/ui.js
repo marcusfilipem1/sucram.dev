@@ -133,27 +133,40 @@ export function mountSimulator(el, onQuote) {
 const TYPES = ["Sistema de gestão", "Integração / API", "Site", "Outro"];
 // converte categorias e serviços (ex.: "API / Integração", "Comércio e PDV") em um dos tipos acima
 const toType = (t = "") => (/api|integra/i.test(t) ? "Integração / API" : /^site|institucional/i.test(t) ? "Site" : /outro/i.test(t) ? "Outro" : "Sistema de gestão");
-const BUDGETS = ["Ainda não sei", "Até R$ 3 mil", "R$ 3 mil a 8 mil", "R$ 8 mil a 20 mil", "Acima de R$ 20 mil"];
-const DEADLINES = ["Sem pressa", "Em até 1 mês", "Em até 3 meses", "Urgente"];
+// DDDs válidos no Brasil (Anatel)
+const DDDS = new Set("11 12 13 14 15 16 17 18 19 21 22 24 27 28 31 32 33 34 35 37 38 41 42 43 44 45 46 47 48 49 51 53 54 55 61 62 63 64 65 66 67 68 69 71 73 74 75 77 79 81 82 83 84 85 86 87 88 89 91 92 93 94 95 96 97 98 99".split(" "));
+const EMAIL_RE = /^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/i;
+
+function phoneError(v) {
+  const d = v.replace(/\D/g, "");
+  if (!d) return "Informe seu WhatsApp com DDD.";
+  if (d.length < 10) return "Número incompleto. Inclua o DDD, ex.: (21) 99999-9999.";
+  if (d.length > 11) return "Número longo demais. Use só DDD e número.";
+  if (!DDDS.has(d.slice(0, 2))) return `DDD ${d.slice(0, 2)} não existe. Confira os dois primeiros dígitos.`;
+  if (d.length === 11 && d[2] !== "9") return "Celular com 11 dígitos começa com 9 depois do DDD.";
+  return "";
+}
+function emailError(v) {
+  const t = v.trim();
+  if (!t) return "Informe seu e-mail.";
+  if (!EMAIL_RE.test(t) || t.includes("..")) return "E-mail inválido. Confira, ex.: nome@empresa.com.br";
+  return "";
+}
 
 function formHTML(prefix) {
   const id = (n) => `${prefix}-${n}`;
   return `
   <form class="quote form-grid" novalidate data-quote-form>
     <div class="row">
-      <div class="field"><label for="${id("name")}">Nome *</label><input id="${id("name")}" name="nome" autocomplete="name" required></div>
+      <div class="field"><label for="${id("name")}">Nome *</label><input id="${id("name")}" name="nome" autocomplete="name" required><small class="field-error" data-err="nome" hidden></small></div>
       <div class="field"><label for="${id("company")}">Empresa</label><input id="${id("company")}" name="empresa" autocomplete="organization"></div>
     </div>
     <div class="row">
-      <div class="field"><label for="${id("email")}">E-mail *</label><input id="${id("email")}" name="email" type="email" autocomplete="email" required></div>
-      <div class="field"><label for="${id("phone")}">WhatsApp</label><input id="${id("phone")}" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="(21) 90000-0000" data-phone></div>
+      <div class="field"><label for="${id("email")}">E-mail *</label><input id="${id("email")}" name="email" type="email" autocomplete="email" required><small class="field-error" data-err="email" hidden></small></div>
+      <div class="field"><label for="${id("phone")}">WhatsApp com DDD *</label><input id="${id("phone")}" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="(21) 99999-9999" required data-phone><small class="field-error" data-err="whatsapp" hidden></small></div>
     </div>
     <fieldset class="field"><legend>Tipo de projeto</legend><div class="types">${TYPES.map((t, i) => `<label class="mod"><input type="radio" name="tipo" id="${id("t" + i)}" value="${t}" ${i === 0 ? "checked" : ""}><span>${t}</span></label>`).join("")}</div></fieldset>
-    <div class="row">
-      <div class="field"><label for="${id("budget")}">Investimento previsto</label><select id="${id("budget")}" name="investimento">${BUDGETS.map((b) => `<option>${b}</option>`).join("")}</select></div>
-      <div class="field"><label for="${id("deadline")}">Prazo</label><select id="${id("deadline")}" name="prazo">${DEADLINES.map((b) => `<option>${b}</option>`).join("")}</select></div>
-    </div>
-    <div class="field"><label for="${id("msg")}">Conte sobre o projeto *</label><textarea id="${id("msg")}" name="mensagem" required placeholder="O que a empresa faz hoje, o que precisa resolver e quem vai usar o sistema."></textarea></div>
+    <div class="field"><label for="${id("msg")}">Conte sobre o projeto *</label><textarea id="${id("msg")}" name="mensagem" required placeholder="O que a empresa faz hoje, o que precisa resolver e quem vai usar o sistema."></textarea><small class="field-error" data-err="mensagem" hidden></small></div>
     <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
     <p class="form-error" data-error hidden></p>
     <div class="btns"><button class="btn primary lg" type="submit" data-send>Enviar pedido</button></div>
@@ -178,17 +191,39 @@ function bindForm(root, profile) {
   const form = root.querySelector("[data-quote-form]");
   const err = root.querySelector("[data-error]");
   form.querySelector("[data-phone]").addEventListener("input", (e) => (e.target.value = maskPhone(e.target.value)));
-  root.querySelector("[data-again]").addEventListener("click", () => { form.reset(); form.hidden = false; root.querySelector("[data-sent]").hidden = true; });
+
+  const checks = {
+    nome: (v) => (v.trim().length < 2 ? "Informe seu nome." : ""),
+    email: emailError,
+    whatsapp: phoneError,
+    mensagem: (v) => (v.trim().length < 10 ? "Conte um pouco sobre o projeto (mínimo de 10 caracteres)." : ""),
+  };
+  const setErr = (name, msg) => {
+    const input = form.querySelector(`[name="${name}"]`);
+    const out = form.querySelector(`[data-err="${name}"]`);
+    input.setAttribute("aria-invalid", msg ? "true" : "false");
+    out.textContent = msg; out.hidden = !msg;
+  };
+  // valida ao sair do campo e limpa o erro enquanto a pessoa corrige
+  Object.keys(checks).forEach((name) => {
+    const input = form.querySelector(`[name="${name}"]`);
+    input.addEventListener("blur", () => { if (input.value) setErr(name, checks[name](input.value)); });
+    input.addEventListener("input", () => { if (input.getAttribute("aria-invalid") === "true") setErr(name, checks[name](input.value)); });
+  });
+  root.querySelector("[data-again]").addEventListener("click", () => { form.reset(); form.querySelectorAll("[data-err]").forEach((e) => (e.hidden = true)); form.querySelectorAll("[aria-invalid]").forEach((e) => e.removeAttribute("aria-invalid")); form.hidden = false; root.querySelector("[data-sent]").hidden = true; });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     err.hidden = true;
     const data = Object.fromEntries(new FormData(form));
-    const missing = [];
-    if (!data.nome.trim()) missing.push("nome");
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) missing.push("um e-mail válido");
-    if (!data.mensagem.trim()) missing.push("a descrição do projeto");
-    if (missing.length) { err.textContent = `Preencha ${missing.join(", ")} para enviar.`; err.hidden = false; return; }
+    let first = null;
+    for (const [name, check] of Object.entries(checks)) {
+      const msg = check(data[name] || "");
+      setErr(name, msg);
+      if (msg && !first) first = name;
+    }
+    if (first) { form.querySelector(`[name="${first}"]`).focus(); return; }
+    data.email = data.email.trim();
     if (data._honey) return; // robô
 
     const btn = form.querySelector("[data-send]");
