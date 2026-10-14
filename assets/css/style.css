@@ -38,6 +38,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
@@ -336,3 +337,36 @@ fieldset.field legend { font-size: 13.5px; font-weight: 500; padding: 0; margin-
 .field-error[hidden] { display: none; }
 input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--danger); }
 input[aria-invalid="true"]:focus, textarea[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 20%, transparent); }
+
+/* ===== logo, idioma, telefone e rodapé ===== */
+.brand::before { content: none; }
+.brand { gap: 10px; }
+.logo-mark { width: 30px; height: 30px; flex: none; display: block; }
+.brand-name span { color: var(--accent); }
+.lang-btn { font: 600 12.5px/1 var(--mono); letter-spacing: .04em; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; cursor: pointer; }
+.lang-btn:hover { color: var(--ink); border-color: var(--muted); }
+.phone-row { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 1fr); gap: 8px; }
+@media (max-width: 480px) { .phone-row { grid-template-columns: 1fr; } }
+.contact-alt { margin-top: 18px !important; }
+.contact-alt a { color: var(--paper); text-underline-offset: 3px; }
+footer.site { padding-block: 56px 28px; border-top: 1px solid var(--line); font-family: var(--body); font-size: 15px; color: var(--ink); background: var(--paper); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, .7fr); gap: 40px; }
+@media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr; gap: 28px; } }
+.foot-brand .brand { font-size: 18px; }
+.foot-brand .logo-mark { width: 36px; height: 36px; }
+.foot-brand p { color: var(--muted); margin: 12px 0 0; max-width: 34ch; }
+.foot-h { margin-bottom: 12px; }
+footer.site .channels { margin: 0; gap: 12px; }
+footer.site .channels a { color: var(--ink); font-size: 15.5px; font-weight: 500; text-decoration: none; }
+footer.site .channels a:hover { color: var(--accent); }
+.foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.foot-links a { color: var(--muted); text-decoration: none; }
+.foot-links a:hover, .foot-links .link:hover { color: var(--ink); }
+.foot-links .link { color: var(--muted); text-decoration: none; }
+.foot-bottom { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font: 13px var(--mono); }
+.en-box { border: 1px dashed var(--line); border-radius: 8px; padding: 12px 14px; }
+.en-box summary { cursor: pointer; font-weight: 500; font-size: 14px; }
+.brand .brand-name { color: var(--ink); }
+.brand .brand-name span { color: var(--accent); }
+.contact .contact-form p, .contact .contact-form .hint { color: var(--muted); }
+.contact .contact-form .sent p { color: var(--muted); }
