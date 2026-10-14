@@ -332,3 +332,7 @@ fieldset.field legend { font-size: 13.5px; font-weight: 500; padding: 0; margin-
 .fab-panel .btn { justify-content: center; }
 .contact .contact-form .btn { background: var(--surface); color: var(--ink); border-color: var(--line); }
 .contact .contact-form .btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.field-error { color: var(--danger); font-size: 13px; margin: 0; }
+.field-error[hidden] { display: none; }
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--danger); }
+input[aria-invalid="true"]:focus, textarea[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 20%, transparent); }
