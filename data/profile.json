@@ -46,5 +46,30 @@
     }
   ],
   "phoneDisplay": "(21) 97489-3685",
-  "formEndpoint": "https://formsubmit.co/ajax/marcusmftom@gmail.com"
+  "formEndpoint": "https://formsubmit.co/ajax/marcusmftom@gmail.com",
+  "en": {
+    "role": "Full Stack Developer",
+    "headlineStart": "Custom software for",
+    "headlineEnd": "businesses and retailers.",
+    "bio": "I build management systems, point-of-sale software, online stores and integrations that fix how a business really runs: inventory, checkout, finance and customer service.",
+    "about": "I handle the whole project: I learn how the business works, design the database, build the API and the interface, deploy it and support it after launch.",
+    "services": [
+      {
+        "title": "Management systems",
+        "text": "ERPs, inventory, finance, work orders and records tailored to how your company works."
+      },
+      {
+        "title": "Retail and POS",
+        "text": "Checkout, online stores, catalogs, payment gateways and invoicing."
+      },
+      {
+        "title": "Integrations and APIs",
+        "text": "REST APIs, webhooks and automations that connect your system to banks, marketplaces and ERPs."
+      },
+      {
+        "title": "Dashboards and reports",
+        "text": "Dashboards with your key numbers and reports ready to export for your accountant."
+      }
+    ]
+  }
 }
