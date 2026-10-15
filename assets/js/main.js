@@ -1,5 +1,5 @@
 import { getJSON, homeHTML, footerHTML, brandHTML, mountGrid, sortProjects, withCodes, esc } from "./common.js";
-import { mountHeroMock, mountSimulator, mountQuote, mountWhatsApp } from "./ui.js";
+import { mountHeroDeck, mountSimulator, mountQuote, mountWhatsApp } from "./ui.js";
 import { applyStatic, fixLegacyLang } from "./i18n.js";
 
 // A página já chega pronta em HTML (gerada no deploy, boa para o Google).
@@ -14,8 +14,9 @@ import { applyStatic, fixLegacyLang } from "./i18n.js";
     main.innerHTML = homeHTML(profile, projects);
     document.querySelector("#rodape").innerHTML = footerHTML(profile, "");
     applyStatic();
-    mountGrid(main, projects, (slug) => `projetos/${encodeURIComponent(slug)}/`);
-    mountHeroMock(main.querySelector("[data-hero-mock]"));
+    const href = (slug) => `projetos/${encodeURIComponent(slug)}/`;
+    mountGrid(main, projects, href);
+    mountHeroDeck(main.querySelector("[data-hero-mock]"), projects, href);
     const openQuote = mountQuote(profile, main.querySelector("[data-inline-form]"));
     mountSimulator(main.querySelector("[data-sim]"), openQuote);
     mountWhatsApp(profile);

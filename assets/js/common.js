@@ -48,7 +48,7 @@ function coverHTML(p) {
 
 /* ---------- página inicial ---------- */
 export function homeHTML(profile, projects) {
-  const live = projects.filter((p) => p.status === "Em produção").length;
+  const live = Number.isFinite(profile.inProduction) ? profile.inProduction : projects.filter((p) => p.status === "Em produção").length;
   const segs = new Set(projects.map((p) => p.category).filter(Boolean)).size;
   const segments = t("segments");
   const role = pick(profile, "role");
@@ -83,7 +83,6 @@ export function homeHTML(profile, projects) {
     <div class="wrap">
       <div class="sec-head">
         <div><div class="label">${t("portfolio")}</div><h2>${t("projects_title")}</h2></div>
-        <div class="filters" id="filters" role="toolbar" aria-label="${t("filter_label")}"></div>
       </div>
       <div class="grid" id="grid"></div>
     </div>
@@ -130,7 +129,6 @@ export function homeHTML(profile, projects) {
         <div class="label">${t("contact_label")}</div>
         <h2>${t("contact_title")}</h2>
         <p>${t("contact_text")}</p>
-        <p class="contact-alt"><a href="#rodape">${t("contact_alt")}</a></p>
       </div>
       <div class="contact-form" data-inline-form></div>
     </div>
@@ -165,10 +163,9 @@ export function footerHTML(profile, base = "./") {
   <div class="wrap foot-bottom"><span>© ${new Date().getFullYear()} ${esc(profile.name)}</span></div>`;
 }
 
-export function gridHTML(projects, filter, href) {
-  const list = filter === "Todos" ? projects : projects.filter((p) => p.category === filter);
-  if (!list.length) return `<div class="empty">${t("empty")}</div>`;
-  return list.map((p) => `
+export function gridHTML(projects, href) {
+  if (!projects.length) return `<div class="empty">${t("empty")}</div>`;
+  return projects.map((p) => `
     <a class="card" href="${href(p.slug)}" data-slug="${esc(p.slug)}">
       ${coverHTML(p)}
       <div class="card-body">
@@ -181,19 +178,9 @@ export function gridHTML(projects, filter, href) {
     </a>`).join("");
 }
 
-export function filtersHTML(projects, active) {
-  const cats = ["Todos", ...new Set(projects.map((p) => p.category).filter(Boolean))];
-  return cats.map((c) => `<button class="chip ${c === active ? "on" : ""}" data-cat="${esc(c)}" aria-pressed="${c === active}">${esc(c === "Todos" ? t("all") : tData(c))}</button>`).join("");
-}
-
+// portfólio: todos os projetos de uma vez, sem filtros
 export function mountGrid(root, projects, href) {
-  let active = "Todos";
-  const draw = () => {
-    root.querySelector("#filters").innerHTML = filtersHTML(projects, active);
-    root.querySelector("#grid").innerHTML = gridHTML(projects, active, href);
-    root.querySelectorAll(".chip").forEach((b) => b.addEventListener("click", () => { active = b.dataset.cat; draw(); }));
-  };
-  draw();
+  root.querySelector("#grid").innerHTML = gridHTML(projects, href);
 }
 
 /* ---------- página do projeto ---------- */

@@ -1,6 +1,6 @@
 // Partes interativas: maquetes de site e de sistema, simulador, formulário de orçamento e botão de WhatsApp.
-import { esc, waLink } from "./common.js";
-import { t, curLang } from "./i18n.js";
+import { esc, waLink, statusPill, assetUrl, safeUrl } from "./common.js";
+import { t, curLang, pick, tData } from "./i18n.js";
 
 const reduceMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 const en = () => curLang() === "en";
@@ -174,20 +174,65 @@ export function mockHTML(seg, company, modules) {
   </div>`;
 }
 
-export function mountHeroMock(el) {
+/* ---------- vitrine do topo: os projetos reais cadastrados no painel ---------- */
+// cor de cada projeto: sempre a mesma para o mesmo projeto, dentro de uma paleta escolhida
+const HUES = [222, 262, 192, 338, 158, 12, 284, 205];
+const hueOf = (str = "") => HUES[[...str].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % HUES.length];
+const hostOf = (p) => { try { return new URL(p.liveUrl).hostname.replace(/^www\./, ""); } catch { return `${p.slug}`.slice(0, 32); } };
+
+function deckCard(p, i, href) {
+  const title = pick(p, "title");
+  const cover = safeUrl(p.cover) ? assetUrl(p.cover) : "";
+  const art = cover
+    ? `<img src="${esc(cover)}" alt="${esc(t("cover_alt")(title))}" loading="${i ? "lazy" : "eager"}">`
+    : `<div class="dk-art" style="--h:${hueOf(p.slug)}" aria-hidden="true"><i></i><i></i><span>${esc(tData(p.category) || "")}</span><b>${esc(title.replace(/\s*\((exemplo|example)\)\s*$/i, ""))}</b></div>`;
+  return `
+    <a class="dk-card" href="${href(p.slug)}" data-pos="${i}" ${i ? 'tabindex="-1" aria-hidden="true"' : ""}>
+      <div class="dk-bar"><i></i><i></i><i></i><span>${esc(hostOf(p))}</span></div>
+      <div class="dk-shot">${art}</div>
+      <div class="dk-info">
+        <div class="dk-top"><span class="code">${esc(p.code || "")}</span>${statusPill(p.status)}</div>
+        <b>${esc(title)}</b>
+        <small>${esc([pick(p, "client"), p.year].filter(Boolean).join(" · "))}</small>
+        <span class="dk-cta">${t("deck_cta")}</span>
+      </div>
+    </a>`;
+}
+
+export function deckHTML(projects, href) {
+  const list = projects.slice(0, 6);
+  if (!list.length) return "";
+  return `
+  <div class="deck" data-deck aria-label="${t("deck_label")}">
+    <div class="dk-stack">${list.map((p, i) => deckCard(p, i, href)).join("")}</div>
+    <div class="dk-dots">${list.map((_, i) => `<button type="button" data-go="${i}" aria-label="${t("deck_next")} ${i + 1}" ${i ? "" : 'aria-current="true"'}></button>`).join("")}</div>
+    <div class="mock-tag t1">${t("deck_tag1")}</div>
+    <div class="mock-tag t2">${t("deck_tag2")}</div>
+  </div>`;
+}
+
+export function mountHeroDeck(el, projects, href) {
   if (!el) return;
-  const order = ["clinica", "restaurante", "loja", "padaria", "oficina"];
-  let i = 0;
-  const draw = () => { el.innerHTML = siteMockHTML(order[i % order.length]); };
-  draw();
-  if (reduceMotion()) return;
-  clearInterval(el._timer);
-  el._timer = setInterval(() => {
-    if (!document.body.contains(el)) return clearInterval(el._timer);
-    const m = el.querySelector(".mock");
-    m?.classList.add("fade");
-    setTimeout(() => { i++; draw(); }, 350);
-  }, 5200);
+  el.innerHTML = deckHTML(projects, href);
+  const cards = [...el.querySelectorAll(".dk-card")];
+  const dots = [...el.querySelectorAll("[data-go]")];
+  if (cards.length < 2) return;
+  let front = 0;
+  const show = (n) => {
+    front = (n + cards.length) % cards.length;
+    cards.forEach((c, i) => {
+      const pos = (i - front + cards.length) % cards.length;
+      c.dataset.pos = pos;
+      if (pos) { c.setAttribute("tabindex", "-1"); c.setAttribute("aria-hidden", "true"); } else { c.removeAttribute("tabindex"); c.removeAttribute("aria-hidden"); }
+    });
+    dots.forEach((d, i) => d.toggleAttribute("aria-current", i === front));
+  };
+  dots.forEach((d) => d.addEventListener("click", () => { show(+d.dataset.go); restart(); }));
+  // cartas de trás passam para a frente ao clicar
+  cards.forEach((c, i) => c.addEventListener("click", (e) => { if (c.dataset.pos !== "0") { e.preventDefault(); show(i); restart(); } }));
+  let timer;
+  const restart = () => { clearInterval(timer); if (!reduceMotion()) timer = setInterval(() => { if (!document.body.contains(el)) return clearInterval(timer); if (!el.matches(":hover")) show(front + 1); }, 4800); };
+  restart();
 }
 
 /* ---------- simulador: site (padrão) ou sistema ---------- */
