@@ -60,6 +60,8 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.08; letter-spacing: -0.
 .nav ul a { text-decoration: none; color: var(--muted); }
 .nav ul a:hover { color: var(--ink); }
 @media (max-width: 640px) { .nav ul { gap: 14px; font-size: 14px; } .nav ul .hide-sm { display: none; } }
+@media (max-width: 400px) { .nav .wrap { gap: 8px; } .nav ul { gap: 10px; font-size: 13.5px; } .nav ul .btn.sm { padding-inline: 10px; } .nav .brand { font-size: 14.5px; gap: 8px; } }
+@media (max-width: 340px) { .nav ul li:first-child { display: none; } }
 
 /* botões */
 .btns { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -215,11 +217,11 @@ html.lock { overflow: hidden; }
 .hero .wrap + .wrap { display: block; }
 @media (max-width: 960px) { .hero .wrap:first-child { grid-template-columns: 1fr; } }
 .hero-mock { position: relative; min-width: 0; overflow-x: clip; overflow-y: visible; }
-.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 56px 0 0; border-block: 1px solid var(--line); }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 56px 0 0; border-block: 1px solid var(--line); }
 .kpis > div { padding: 18px 16px 18px 0; }
 .kpis > div + div { padding-left: 18px; border-left: 1px solid var(--line); }
 .kpis dd { margin: 4px 0 0; font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 34px); font-variant-numeric: tabular-nums; }
-@media (max-width: 700px) { .kpis { grid-template-columns: 1fr 1fr; } .kpis > div:nth-child(3) { padding-left: 0; border-left: 0; } .kpis > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+@media (max-width: 700px) { .kpis { grid-template-columns: 1fr 1fr; } .kpis > div:nth-child(3) { grid-column: 1 / -1; padding-left: 0; border-left: 0; border-top: 1px solid var(--line); } }
 
 /* maquete de sistema */
 .mock { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); overflow: visible; font-size: 12.5px; }
@@ -256,7 +258,7 @@ html.lock { overflow: hidden; }
 
 /* faixa de segmentos */
 .marquee { margin-top: 0; border-bottom: 1px solid var(--line); overflow: hidden; padding-block: 16px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.marquee-track { display: flex; gap: 40px; width: max-content; animation: marquee 40s linear infinite; }
+.marquee-track { display: flex; gap: 40px; width: max-content; animation: marquee 120s linear infinite; }
 .marquee-track span { font-family: var(--display); font-weight: 600; font-size: 18px; color: var(--muted); white-space: nowrap; }
 .marquee-track span::after { content: "/"; margin-left: 40px; color: var(--line); }
 @keyframes marquee { to { transform: translateX(-50%); } }
