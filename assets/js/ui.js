@@ -1,4 +1,4 @@
-// Partes interativas: maquete do sistema, simulador, formulário de orçamento e botão de WhatsApp.
+// Partes interativas: maquetes de site e de sistema, simulador, formulário de orçamento e botão de WhatsApp.
 import { esc, waLink } from "./common.js";
 import { t, curLang } from "./i18n.js";
 
@@ -51,6 +51,102 @@ export const ALL_MODULES = Object.keys(MODULES);
 const modName = (m) => (en() ? MODULES[m] || m : m);
 const pickL = ([pt, eng]) => (en() ? eng : pt);
 
+
+/* ---------- dados da prévia de site (pt / en) ---------- */
+const SECTIONS = {
+  "Serviços": "Services", "Cardápio / produtos": "Menu / products", "Galeria de fotos": "Photo gallery", "Agendamento online": "Online booking",
+  "Loja virtual": "Online store", "Avaliações": "Reviews", "Mapa e horário": "Map and hours", "Botão de WhatsApp": "WhatsApp button",
+};
+export const ALL_SECTIONS = Object.keys(SECTIONS);
+const secName = (x) => (en() ? SECTIONS[x] || x : x);
+const COLORS = [["#1d4ed8", "Azul", "Blue"], ["#0f766e", "Verde", "Green"], ["#b4232c", "Vermelho", "Red"], ["#7c3aed", "Roxo", "Purple"], ["#c2410c", "Laranja", "Orange"]];
+const SITE = {
+  padaria: {
+    kicker: ["Padaria artesanal em Maricá", "Artisan bakery"], tagline: ["Pão quentinho saindo do forno o dia todo", "Fresh bread out of the oven all day"],
+    cta: ["Encomendar pelo WhatsApp", "Order on WhatsApp"], color: "#c2410c",
+    items: [[["Pães artesanais", "Artisan bread"], ["R$ 14,90", "$ 14.90"]], [["Bolos e tortas", "Cakes and pies"], ["R$ 42,90", "$ 42.90"]], [["Salgados para festa", "Party snacks"], ["R$ 90,00", "$ 90.00"]]],
+    sections: ["Cardápio / produtos", "Galeria de fotos", "Mapa e horário", "Botão de WhatsApp"],
+    tags: [["Encomenda recebida pelo WhatsApp", "Order received on WhatsApp"], ["Cliente chegou pelo Google", "Visitor found you on Google"]],
+  },
+  loja: {
+    kicker: ["Materiais de construção", "Building supplies"], tagline: ["Tudo para a sua obra, com entrega no mesmo dia", "Everything for your build, delivered same day"],
+    cta: ["Ver produtos", "Browse products"], color: "#1d4ed8",
+    items: [[["Cimento CP-II 50 kg", "Cement 50 kg"], ["R$ 39,00", "$ 39.00"]], [["Tinta acrílica 18 L", "Acrylic paint 18 L"], ["R$ 389,00", "$ 389.00"]], [["Kit ferramentas", "Tool kit"], ["R$ 149,00", "$ 149.00"]]],
+    sections: ["Loja virtual", "Serviços", "Mapa e horário", "Botão de WhatsApp"],
+    tags: [["Pedido online pago no Pix", "Online order paid"], ["Orçamento pedido pelo site", "Quote requested on the site"]],
+  },
+  clinica: {
+    kicker: ["Clínica médica e odontológica", "Medical and dental clinic"], tagline: ["Cuidado completo para toda a família", "Complete care for the whole family"],
+    cta: ["Agendar consulta", "Book an appointment"], color: "#0f766e",
+    items: [[["Clínico geral", "General practice"], ["Seg a sex", "Mon to Fri"]], [["Odontologia", "Dentistry"], ["Seg a sáb", "Mon to Sat"]], [["Pediatria", "Pediatrics"], ["Ter e qui", "Tue and Thu"]]],
+    sections: ["Serviços", "Agendamento online", "Avaliações", "Botão de WhatsApp"],
+    tags: [["Nova consulta agendada", "New appointment booked"], ["Paciente chegou pelo Google", "Patient found you on Google"]],
+  },
+  oficina: {
+    kicker: ["Mecânica e funilaria", "Auto repair"], tagline: ["Seu carro revisado com orçamento na hora", "Your car serviced, with an instant estimate"],
+    cta: ["Pedir orçamento", "Get an estimate"], color: "#b4232c",
+    items: [[["Revisão completa", "Full service"], ["a partir de R$ 290", "from $ 290"]], [["Freios e suspensão", "Brakes and suspension"], ["Orçamento grátis", "Free estimate"]], [["Alinhamento", "Wheel alignment"], ["R$ 80,00", "$ 80.00"]]],
+    sections: ["Serviços", "Galeria de fotos", "Avaliações", "Botão de WhatsApp"],
+    tags: [["Orçamento pedido pelo WhatsApp", "Estimate requested on WhatsApp"], ["Visita vinda do Google Maps", "Visitor from Google Maps"]],
+  },
+  restaurante: {
+    kicker: ["Restaurante à beira-mar", "Seaside restaurant"], tagline: ["Frutos do mar frescos, no salão ou em casa", "Fresh seafood, dine in or delivered"],
+    cta: ["Ver cardápio", "See the menu"], color: "#7c3aed",
+    items: [[["Moqueca para dois", "Fish stew for two"], ["R$ 118,00", "$ 118.00"]], [["Camarão na moranga", "Shrimp in pumpkin"], ["R$ 96,00", "$ 96.00"]], [["Prato do dia", "Daily special"], ["R$ 34,90", "$ 34.90"]]],
+    sections: ["Cardápio / produtos", "Galeria de fotos", "Mapa e horário", "Botão de WhatsApp"],
+    tags: [["Reserva feita pelo site", "Table booked on the site"], ["Pedido de delivery no WhatsApp", "Delivery order on WhatsApp"]],
+  },
+};
+const slug = (n) => n.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "");
+
+function sectionBlock(name, d) {
+  const items = d.items;
+  const title = `<h5>${esc(secName(name))}</h5>`;
+  switch (name) {
+    case "Serviços":
+      return `<div class="sm-sec">${title}<div class="sm-cards">${items.map(([a]) => `<div><i></i><span>${esc(pickL(a))}</span></div>`).join("")}</div></div>`;
+    case "Cardápio / produtos":
+      return `<div class="sm-sec">${title}${items.map(([a, b]) => `<div class="sm-row"><span>${esc(pickL(a))}</span><b>${esc(pickL(b))}</b></div>`).join("")}</div>`;
+    case "Loja virtual":
+      return `<div class="sm-sec">${title}<div class="sm-cards">${items.map(([a, b]) => `<div><i></i><span>${esc(pickL(a))}</span><b>${esc(pickL(b))}</b><em>${en() ? "Buy" : "Comprar"}</em></div>`).join("")}</div></div>`;
+    case "Galeria de fotos":
+      return `<div class="sm-sec">${title}<div class="sm-gallery"><i></i><i></i><i></i><i></i></div></div>`;
+    case "Agendamento online": {
+      const slots = ["09:00", "10:30", "14:00", "15:30"];
+      return `<div class="sm-sec">${title}<div class="sm-slots">${slots.map((h, i) => `<span class="${i === 1 ? "on" : ""}">${h}</span>`).join("")}</div></div>`;
+    }
+    case "Avaliações":
+      return `<div class="sm-sec">${title}<div class="sm-stars">★★★★★ <small>4,9 · Google</small></div><div class="sm-lines"><i></i><i></i></div></div>`;
+    case "Mapa e horário":
+      return `<div class="sm-sec">${title}<div class="sm-map"><i></i></div><small class="sm-hours">${en() ? "Mon–Sat · 8am–8pm" : "Seg a sáb · 8h às 20h"}</small></div>`;
+    default:
+      return "";
+  }
+}
+
+/* ---------- maquete de site ---------- */
+export function siteMockHTML(seg, company, sections, color) {
+  const d = SITE[seg] || SITE.padaria;
+  const s = SEG[seg] || SEG.padaria;
+  const name = company?.trim() || s.company;
+  const secs = sections || d.sections;
+  const blocks = secs.filter((x) => x !== "Botão de WhatsApp").slice(0, 4);
+  const nav = blocks.slice(0, 3).map((x) => secName(x).split(" ")[0]);
+  return `
+  <div class="mock site-mock" aria-hidden="true" style="--sc:${esc(color || d.color)}">
+    <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">${esc(slug(name))}.com.br</span></div>
+    <div class="sm-nav"><b>${esc(name)}</b><span>${en() ? "Home" : "Início"}</span>${nav.map((n) => `<span>${esc(n)}</span>`).join("")}</div>
+    <div class="sm-hero">
+      <div><small>${esc(pickL(d.kicker))}</small><h4>${esc(pickL(d.tagline))}</h4><span class="sm-btn">${esc(pickL(d.cta))}</span></div>
+      <div class="sm-img"><i></i><i></i></div>
+    </div>
+    <div class="sm-body">${blocks.length ? blocks.map((b) => sectionBlock(b, d)).join("") : `<div class="sm-sec"><div class="sm-lines"><i></i><i></i><i></i></div></div>`}</div>
+    ${secs.includes("Botão de WhatsApp") ? `<span class="sm-wa">WhatsApp</span>` : ""}
+    <div class="mock-tag t1" data-tag>${esc(pickL(d.tags[0]))}</div>
+    <div class="mock-tag t2">${esc(pickL(d.tags[1]))}</div>
+  </div>`;
+}
+
 /* ---------- maquete de sistema ---------- */
 export function mockHTML(seg, company, modules) {
   const s = SEG[seg] || SEG.padaria;
@@ -78,60 +174,83 @@ export function mockHTML(seg, company, modules) {
   </div>`;
 }
 
-// faz as linhas da maquete do topo "rodarem", como vendas chegando
-function animateRows(container, seg) {
-  if (reduceMotion()) return;
-  const s = SEG[seg];
-  let i = 0;
-  clearInterval(container._timer);
-  container._timer = setInterval(() => {
-    const rows = container.querySelector("[data-rows]");
-    if (!rows || !document.body.contains(rows)) return clearInterval(container._timer);
-    const [a, b] = s.rows[i++ % s.rows.length];
-    const el = document.createElement("div");
-    el.className = "new";
-    el.innerHTML = `<span>${esc(pickL(a))}</span><b>${esc(pickL(b))}</b>`;
-    rows.prepend(el);
-    while (rows.children.length > 4) rows.lastElementChild.remove();
-  }, 2600);
-}
-
 export function mountHeroMock(el) {
   if (!el) return;
-  el.innerHTML = mockHTML("padaria");
-  animateRows(el, "padaria");
+  const order = ["clinica", "restaurante", "loja", "padaria", "oficina"];
+  let i = 0;
+  const draw = () => { el.innerHTML = siteMockHTML(order[i % order.length]); };
+  draw();
+  if (reduceMotion()) return;
+  clearInterval(el._timer);
+  el._timer = setInterval(() => {
+    if (!document.body.contains(el)) return clearInterval(el._timer);
+    const m = el.querySelector(".mock");
+    m?.classList.add("fade");
+    setTimeout(() => { i++; draw(); }, 350);
+  }, 5200);
 }
 
-/* ---------- simulador ---------- */
+/* ---------- simulador: site (padrão) ou sistema ---------- */
 export function mountSimulator(el, onQuote) {
   if (!el) return;
-  let seg = "padaria", company = "", mods = [...SEG.padaria.modules];
+  let mode = "site", seg = "padaria", company = "";
+  let mods = [...SEG.padaria.modules], secs = [...SITE.padaria.sections], color = SITE.padaria.color;
   el.innerHTML = `
+    <div class="sim-tabs" role="tablist" aria-label="${t("sim_tabs_label")}">
+      <button type="button" role="tab" data-mode="site" aria-selected="true">${t("sim_tab_site")}</button>
+      <button type="button" role="tab" data-mode="system" aria-selected="false">${t("sim_tab_system")}</button>
+    </div>
     <form class="sim-controls" data-sim-form>
       <div class="field"><label for="sim-company">${t("sim_company")}</label><input id="sim-company" placeholder="${esc(SEG.padaria.company)}" maxlength="40"></div>
       <div class="field"><label for="sim-seg">${t("sim_segment")}</label><select id="sim-seg">${Object.entries(SEG).map(([k, v]) => `<option value="${k}">${esc(pickL(v.label))}</option>`).join("")}</select></div>
-      <fieldset class="field"><legend>${t("sim_modules")}</legend><div class="mods" data-mods></div></fieldset>
-      <button class="btn primary" type="submit">${t("sim_btn")}</button>
+      <fieldset class="field" data-site-only><legend>${t("sim_color")}</legend><div class="swatches" data-colors></div></fieldset>
+      <fieldset class="field"><legend data-opts-label></legend><div class="mods" data-mods></div></fieldset>
+      <button class="btn primary" type="submit" data-sim-btn></button>
       <p class="hint">${t("sim_hint")}</p>
     </form>
     <div class="sim-view" data-sim-view></div>`;
   const view = el.querySelector("[data-sim-view]");
-  const drawMods = () => {
-    el.querySelector("[data-mods]").innerHTML = ALL_MODULES.map((m, i) =>
-      `<label class="mod"><input type="checkbox" id="sim-m${i}" value="${esc(m)}" ${mods.includes(m) ? "checked" : ""}><span>${esc(modName(m))}</span></label>`).join("");
-    el.querySelectorAll("[data-mods] input").forEach((c) => c.addEventListener("change", () => {
-      mods = ALL_MODULES.filter((m) => el.querySelector(`[data-mods] input[value="${CSS.escape(m)}"]`)?.checked);
+  const q = (x) => el.querySelector(x);
+  const drawColors = () => {
+    q("[data-colors]").innerHTML = COLORS.map(([c, pt, eng]) =>
+      `<label class="swatch" title="${esc(en() ? eng : pt)}"><input type="radio" name="sim-color" value="${c}" ${c === color ? "checked" : ""} aria-label="${esc(en() ? eng : pt)}"><span style="background:${c}"></span></label>`).join("");
+    q("[data-colors]").querySelectorAll("input").forEach((r) => r.addEventListener("change", () => { color = r.value; draw(); }));
+  };
+  const drawOpts = () => {
+    const site = mode === "site";
+    const all = site ? ALL_SECTIONS : ALL_MODULES;
+    const chosen = site ? secs : mods;
+    const label = site ? secName : modName;
+    q("[data-opts-label]").textContent = site ? t("sim_sections") : t("sim_modules");
+    q("[data-site-only]").hidden = !site;
+    q("[data-sim-btn]").textContent = site ? t("site_btn") : t("sim_btn");
+    q("[data-mods]").innerHTML = all.map((m, i) =>
+      `<label class="mod"><input type="checkbox" id="sim-m${i}" value="${esc(m)}" ${chosen.includes(m) ? "checked" : ""}><span>${esc(label(m))}</span></label>`).join("");
+    q("[data-mods]").querySelectorAll("input").forEach((c) => c.addEventListener("change", () => {
+      const picked = all.filter((m) => q(`[data-mods] input[value="${CSS.escape(m)}"]`)?.checked);
+      if (mode === "site") secs = picked; else mods = picked;
       draw();
     }));
   };
-  const draw = () => { view.innerHTML = mockHTML(seg, company, mods); };
-  el.querySelector("#sim-company").addEventListener("input", (e) => { company = e.target.value; draw(); });
-  el.querySelector("#sim-seg").addEventListener("change", (e) => { seg = e.target.value; mods = [...SEG[seg].modules]; drawMods(); draw(); });
-  el.querySelector("[data-sim-form]").addEventListener("submit", (e) => {
-    e.preventDefault();
-    onQuote({ type: "Sistema de gestão", company: company.trim(), message: t("sim_msg")(pickL(SEG[seg].label), mods.map(modName).join(", ")) });
+  const draw = () => { view.innerHTML = mode === "site" ? siteMockHTML(seg, company, secs, color) : mockHTML(seg, company, mods); };
+  el.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => {
+    mode = b.dataset.mode;
+    el.querySelectorAll("[data-mode]").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+    drawOpts(); draw();
+  }));
+  q("#sim-company").addEventListener("input", (e) => { company = e.target.value; draw(); });
+  q("#sim-seg").addEventListener("change", (e) => {
+    seg = e.target.value; mods = [...SEG[seg].modules]; secs = [...SITE[seg].sections]; color = SITE[seg].color;
+    q("#sim-company").placeholder = SEG[seg].company;
+    drawColors(); drawOpts(); draw();
   });
-  drawMods(); draw();
+  q("[data-sim-form]").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const segLabel = pickL(SEG[seg].label);
+    if (mode === "site") onQuote({ type: "Site", company: company.trim(), message: t("site_msg")(segLabel, secs.map(secName).join(", ")) });
+    else onQuote({ type: "Sistema de gestão", company: company.trim(), message: t("sim_msg")(segLabel, mods.map(modName).join(", ")) });
+  });
+  drawColors(); drawOpts(); draw();
 }
 
 /* ---------- telefone: Brasil com DDD ou qualquer outro país ---------- */
@@ -192,9 +311,9 @@ function maskBR(v) {
 }
 
 /* ---------- formulário de orçamento ---------- */
-const TYPES = ["Sistema de gestão", "Integração / API", "Site", "Outro"];
+const TYPES = ["Site", "Sistema de gestão", "Integração / API", "Outro"];
 // converte categorias e serviços (ex.: "API / Integração", "Comércio e PDV") em um dos tipos acima
-const toType = (s = "") => (/api|integra/i.test(s) ? "Integração / API" : /^(site|website)|institucional/i.test(s) ? "Site" : /outro|other/i.test(s) ? "Outro" : "Sistema de gestão");
+const toType = (s = "") => (/api|integra/i.test(s) ? "Integração / API" : /sistema|gest|pdv|erp|estoque|dashboard|system|pos\b/i.test(s) ? "Sistema de gestão" : /outro|other/i.test(s) ? "Outro" : "Site");
 
 function formHTML(prefix) {
   const id = (n) => `${prefix}-${n}`;
