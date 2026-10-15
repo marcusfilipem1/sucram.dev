@@ -5,8 +5,8 @@ import { readFile, writeFile, mkdir, cp, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setCurrentLang, t, pick, altPath } from "../assets/js/i18n.js";
-import { homeHTML, footerHTML, brandHTML, projectHTML, gridHTML, filtersHTML, sortProjects, withCodes, esc, assetUrl } from "../assets/js/common.js";
-import { siteMockHTML } from "../assets/js/ui.js";
+import { homeHTML, footerHTML, brandHTML, projectHTML, gridHTML, sortProjects, withCodes, esc, assetUrl } from "../assets/js/common.js";
+import { deckHTML } from "../assets/js/ui.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "dist");
@@ -146,12 +146,11 @@ for (const lang of ["pt", "en"]) {
   const home = lang === "en" ? "/en/" : "/";
   const seo = pick(profile, "seo") || {};
 
-  // página inicial: conteúdo completo, com a grade de projetos e a prévia de site já preenchidas
-  let main = homeHTML(profile, projects)
-    .replace('<div class="filters" id="filters" role="toolbar" aria-label="' + t("filter_label") + '"></div>',
-      '<div class="filters" id="filters" role="toolbar" aria-label="' + t("filter_label") + '">' + filtersHTML(projects, "Todos") + "</div>")
-    .replace('<div class="grid" id="grid"></div>', `<div class="grid" id="grid">${gridHTML(projects, "Todos", (slug) => `projetos/${encodeURIComponent(slug)}/`)}</div>`)
-    .replace('<div class="hero-mock" data-hero-mock></div>', `<div class="hero-mock" data-hero-mock>${siteMockHTML("clinica")}</div>`);
+  // página inicial: conteúdo completo, com a vitrine e a grade de projetos já preenchidas
+  const href = (slug) => `projetos/${encodeURIComponent(slug)}/`;
+  const main = homeHTML(profile, projects)
+    .replace('<div class="grid" id="grid"></div>', `<div class="grid" id="grid">${gridHTML(projects, href)}</div>`)
+    .replace('<div class="hero-mock" data-hero-mock></div>', `<div class="hero-mock" data-hero-mock>${deckHTML(projects, href)}</div>`);
   await write(home, shell({ lang, path: home, title: seo.title, description: seo.description, main, script: "/assets/js/main.js", ld: [businessLD(lang), faqLD()], isHome: true }));
   urls.push(home);
 
