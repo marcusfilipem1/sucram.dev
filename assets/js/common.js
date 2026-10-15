@@ -49,7 +49,6 @@ function coverHTML(p) {
 /* ---------- página inicial ---------- */
 export function homeHTML(profile, projects) {
   const live = Number.isFinite(profile.inProduction) ? profile.inProduction : projects.filter((p) => p.status === "Em produção").length;
-  const segs = new Set(projects.map((p) => p.category).filter(Boolean)).size;
   const segments = t("segments");
   const role = pick(profile, "role");
   return `
@@ -71,7 +70,6 @@ export function homeHTML(profile, projects) {
       <dl class="kpis">
         <div><dt class="label">${t("kpi_projects")}</dt><dd>${projects.length}</dd></div>
         <div><dt class="label">${t("kpi_live")}</dt><dd>${live}</dd></div>
-        <div><dt class="label">${t("kpi_areas")}</dt><dd>${segs}</dd></div>
         <div><dt class="label">${t("kpi_service")}</dt><dd>${t("kpi_service_v")}</dd></div>
       </dl>
     </div>
