@@ -40,7 +40,7 @@ export const adminHTML = () => `
       ${field("f-title", "Título *", `<input id="f-title" required placeholder="Sistema de gestão para a Padaria Bom Grão">`)}
       <div class="row">
         ${field("f-client", "Cliente ou segmento", `<input id="f-client" placeholder="Padaria, clínica, loja de peças…">`)}
-        ${field("f-category", "Categoria", `<input id="f-category" list="cats" placeholder="Sistema empresarial"><datalist id="cats"><option>Sistema empresarial</option><option>PDV / Comércio</option><option>E-commerce</option><option>API / Integração</option><option>Dashboard</option><option>Site institucional</option><option>Mobile</option></datalist>`)}
+        ${field("f-category", "Categoria", `<input id="f-category" list="cats" placeholder="Site institucional"><datalist id="cats"><option>Site institucional</option><option>Landing page</option><option>Loja virtual</option><option>Sistema empresarial</option><option>PDV / Comércio</option><option>API / Integração</option><option>Dashboard</option><option>Mobile</option></datalist>`)}
       </div>
       <div class="row">
         ${field("f-year", "Ano", `<input id="f-year" inputmode="numeric" placeholder="2026">`)}
