@@ -4,10 +4,10 @@
   "role": "Desenvolvedor Web Full Stack",
   "headlineStart": "Sites profissionais que trazem",
   "headlineEnd": "clientes para o seu negócio.",
-  "bio": "Crio sites rápidos, bonitos e fáceis de achar no Google, feitos para transformar visitas em contatos no WhatsApp. Atendo empresas de Maricá, Niterói e de todo o Brasil e, quando o negócio precisa de mais, desenvolvo também sistemas de gestão.",
+  "bio": "Crio sites profissionais rápidos, bonitos e fáceis de achar no Google, feitos para transformar visitas em clientes no WhatsApp. Atendo empresas de qualquer lugar do Brasil e do mundo, 100% online e, quando o negócio precisa de mais, desenvolvo também sistemas de gestão.",
   "about": "Cuido do projeto inteiro: entendo o negócio, escrevo a estrutura do site, desenho, desenvolvo, registro o domínio, coloco no ar e acompanho depois da entrega. Para quem precisa organizar a rotina, faço também sistemas sob medida, do banco de dados à tela do caixa.",
   "available": true,
-  "location": "Maricá, RJ",
+  "location": "Atendimento 100% online",
   "email": "marcusmftom@gmail.com",
   "whatsapp": "5521974893685",
   "github": "https://github.com/marcusfilipem1",
@@ -51,7 +51,7 @@
     "role": "Full Stack Web Developer",
     "headlineStart": "Professional websites that bring",
     "headlineEnd": "customers to your business.",
-    "bio": "I build fast, good-looking websites that are easy to find on Google and turn visitors into WhatsApp messages and leads. I work with businesses in Brazil and abroad and, when a business needs more, I also build management systems.",
+    "bio": "I design and build fast, professional websites that are easy to find on Google and turn visitors into customers. I work 100% online with businesses anywhere in the world and, when a business needs more, I also build management systems.",
     "about": "I handle the whole project: I learn how the business works, plan the site structure, design it, build it, set up the domain, launch it and support it afterwards. For businesses that need to organize their operations, I also build custom systems, from the database to the checkout screen.",
     "services": [
       {
@@ -72,23 +72,14 @@
       }
     ],
     "seo": {
-      "title": "Website Design & Development for Small Businesses | sucram.dev",
-      "description": "Professional websites, landing pages and online stores for small businesses, built by a full stack developer. Fast, SEO-ready and connected to WhatsApp."
-    }
+      "title": "Professional Website Design & Development | sucram.dev",
+      "description": "Need a website? I design and build professional websites, landing pages and online stores that load fast, rank on Google and bring in customers. Get a quote."
+    },
+    "location": "100% online, worldwide"
   },
   "siteUrl": "https://sucram.pages.dev",
   "seo": {
-    "title": "Criação de Sites para Empresas em Maricá e Niterói | sucram.dev",
-    "description": "Criação de sites profissionais, landing pages e lojas virtuais para empresas de Maricá, Niterói e todo o Brasil. Sites rápidos, no Google e com WhatsApp.",
-    "keywords": [
-      "criação de sites",
-      "site para empresa",
-      "desenvolvedor de sites",
-      "landing page",
-      "loja virtual",
-      "criação de sites Maricá",
-      "criação de sites Niterói",
-      "sistema de gestão"
-    ]
+    "title": "Criação de Sites Profissionais para Empresas | sucram.dev",
+    "description": "Quer criar ou comprar um site? Faço sites profissionais, landing pages e lojas virtuais rápidos, prontos para o Google e com WhatsApp. Peça seu orçamento."
   }
 }
