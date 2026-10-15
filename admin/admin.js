@@ -1,5 +1,5 @@
 // Painel de projetos. Salva direto no repositório do GitHub via API;
-// o GitHub Pages republica o site sozinho depois de cada commit.
+// a Cloudflare Pages gera e republica o site sozinha depois de cada commit.
 // Em modo demonstração (prévia) tudo fica só na memória da página.
 
 const DATA_PATH = "data/projects.json";
@@ -8,7 +8,7 @@ const STORE_KEY = "portfolio-admin";
 const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const OK = ["Em produção", "Concluído"];
 const pill = (s) => (s ? `<span class="pill ${OK.includes(s) ? "ok" : "warn"}">${esc(s)}</span>` : "");
-const slugify = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "projeto";
+const slugify = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "projeto";
 
 /* ---------- marcação do painel ---------- */
 const field = (id, label, input) => `<div class="field"><label for="${id}">${label}</label>${input}</div>`;
@@ -141,7 +141,7 @@ export function mountAdmin(root, opts = {}) {
   root.innerHTML = adminHTML();
   const q = (s) => root.querySelector(s);
   const base = opts.base ?? "../";
-  const siteHref = opts.siteHref || ((slug) => `../projeto.html?p=${encodeURIComponent(slug)}`);
+  const siteHref = opts.siteHref || ((slug) => `../projetos/${encodeURIComponent(slug)}/`);
   const src = (i) => i.dataUrl || (/^(https?:|data:)/.test(i.path) ? i.path : base + i.path);
 
   let backend = null, projects = [], editing = null, cover = null, gallery = [];
@@ -298,7 +298,7 @@ export function mountAdmin(root, opts = {}) {
     const m = location.hostname.match(/^([^.]+)\.github\.io$/);
     // usuario.github.io/<repo>/admin → usuario/<repo>; usuario.github.io/admin → usuario/usuario.github.io
     const seg = location.pathname.split("/").filter(Boolean)[0];
-    if (m) q("#l-repo").value = seg && seg !== "admin" ? `${m[1]}/${seg}` : `${m[1]}/${m[1]}.github.io`;
+    q("#l-repo").value = m ? (seg && seg !== "admin" ? `${m[1]}/${seg}` : `${m[1]}/${m[1]}.github.io`) : "marcusfilipem1/sucram.dev";
     show("login");
   }
 }
