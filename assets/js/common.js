@@ -6,6 +6,9 @@ export const esc = (s = "") =>
 
 export const safeUrl = (u = "") => (/^(https?:|mailto:|data:image\/|\.?\/|assets\/)/i.test(u) ? u : "");
 
+// imagens enviadas pelo painel ficam em assets/…; com "/" funcionam em qualquer página do site
+export const assetUrl = (u = "") => (/^\.?\/?assets\//.test(u) && !/^data:/.test(u) ? "/" + u.replace(/^\.?\//, "") : u);
+
 export async function getJSON(path) {
   const res = await fetch(`${path}?v=${Date.now()}`); // sem cache: projeto novo aparece logo após o deploy
   if (!res.ok) throw new Error(`Falha ao carregar ${path}`);
@@ -40,7 +43,7 @@ export const waLink = (profile, text = t("wa_default")) =>
 function coverHTML(p) {
   const src = safeUrl(p.cover);
   const title = pick(p, "title");
-  return `<div class="cover">${src ? `<img src="${esc(src)}" alt="${esc(t("cover_alt")(title))}" loading="lazy">` : `<div class="ph">${esc(initials(title))}</div>`}</div>`;
+  return `<div class="cover">${src ? `<img src="${esc(assetUrl(src))}" alt="${esc(t("cover_alt")(title))}" loading="lazy">` : `<div class="ph">${esc(initials(title))}</div>`}</div>`;
 }
 
 /* ---------- página inicial ---------- */
@@ -210,7 +213,7 @@ export function projectHTML(p, backHref) {
     <h1>${esc(title)}</h1>
     <p class="lead">${esc(pick(p, "summary") || "")}</p>
     <dl class="facts">${facts.map(([k, v]) => `<div><dt class="label">${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-    ${safeUrl(p.cover) ? `<div class="p-cover"><img src="${esc(p.cover)}" alt="${esc(t("cover_alt")(title))}"></div>` : ""}
+    ${safeUrl(p.cover) ? `<div class="p-cover"><img src="${esc(assetUrl(p.cover))}" alt="${esc(t("cover_alt")(title))}"></div>` : ""}
     <div class="p-body">
       <div class="prose">${paragraphs}</div>
       <aside class="p-aside">
@@ -219,6 +222,6 @@ export function projectHTML(p, backHref) {
         <div class="cta-box"><b>${t("cta_title")}</b><p>${t("cta_text")}</p><button class="btn primary" data-quote="${esc(p.category || "")}" data-quote-ref="${esc(title)}">${t("cta_btn")}</button></div>
       </aside>
     </div>
-    ${gallery.length ? `<div class="gallery">${gallery.map((g) => `<a href="${esc(g)}" target="_blank" rel="noopener"><img src="${esc(g)}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
+    ${gallery.length ? `<div class="gallery">${gallery.map((g, i) => `<a href="${esc(assetUrl(g))}" target="_blank" rel="noopener"><img src="${esc(assetUrl(g))}" alt="${esc(t("cover_alt")(title))} (${i + 2})" loading="lazy"></a>`).join("")}</div>` : ""}
   </div>`;
 }

@@ -1,24 +1,38 @@
-// Idiomas do site: português (padrão) e inglês.
-// O idioma vem de ?lang=en|pt, depois da escolha salva, depois do idioma do navegador.
+// Idiomas do site: português em "/" e inglês em "/en/".
+// O endereço manda no idioma, para o Google indexar cada versão separadamente.
+// Links antigos com ?lang=en continuam funcionando.
 
-const KEY = "sucram-lang";
+const hasWindow = typeof location !== "undefined";
+const pathLang = (p) => (/^\/en(\/|$)/.test(p) ? "en" : "pt");
 
 export function getLang() {
+  if (!hasWindow) return "pt";
   const q = new URLSearchParams(location.search).get("lang");
   if (q === "en" || q === "pt") return q;
-  try { const s = localStorage.getItem(KEY); if (s === "en" || s === "pt") return s; } catch {}
-  return /^pt\b/i.test(navigator.language || "pt") ? "pt" : "en";
+  return pathLang(location.pathname);
 }
 
-export function setLang(lang) {
-  try { localStorage.setItem(KEY, lang); } catch {}
-  const u = new URL(location.href);
-  u.searchParams.delete("lang");
-  location.replace(u.toString());
+// mesmo conteúdo no outro idioma: /projetos/x/ <-> /en/projetos/x/
+export function altPath(path, to) {
+  const base = path.replace(/^\/en(?=\/|$)/, "") || "/";
+  return to === "en" ? "/en" + (base === "/" ? "/" : base) : base;
+}
+
+export function setLang(to) {
+  location.href = altPath(location.pathname, to) + location.hash;
+}
+
+// ?lang=xx num endereço do outro idioma vira o endereço certo
+export function fixLegacyLang() {
+  if (!hasWindow) return;
+  const q = new URLSearchParams(location.search).get("lang");
+  if ((q === "en" || q === "pt") && q !== pathLang(location.pathname) && !/\.html$/.test(location.pathname)) {
+    location.replace(altPath(location.pathname, q) + location.hash);
+  }
 }
 
 export let lang = getLang();
-export const setCurrentLang = (l) => (lang = l); // usado pela prévia
+export const setCurrentLang = (l) => (lang = l); // usado pela prévia e pelo gerador de páginas
 export const curLang = () => lang;
 
 const STR = {
@@ -163,10 +177,12 @@ export const pick = (obj, field) => (lang === "en" && obj?.en?.[field]) || obj?.
 export function applyStatic(root = document) {
   document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
   root.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n)));
+  const other = lang === "en" ? "pt" : "en";
   root.querySelectorAll("[data-lang-switch]").forEach((b) => {
     b.textContent = "langFull" in b.dataset ? (lang === "en" ? "Português" : "English") : t("lang_switch");
     b.setAttribute("aria-label", t("lang_switch_label"));
-    b.setAttribute("lang", lang === "en" ? "pt-BR" : "en");
-    b.onclick = (e) => { e.preventDefault(); setLang(lang === "en" ? "pt" : "en"); };
+    b.setAttribute("lang", other === "en" ? "en" : "pt-BR");
+    if (b.tagName === "A") { b.href = altPath(location.pathname, other) + location.hash; b.setAttribute("hreflang", other === "en" ? "en" : "pt-BR"); }
+    else b.onclick = (e) => { e.preventDefault(); setLang(other); };
   });
 }
