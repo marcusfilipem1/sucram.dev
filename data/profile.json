@@ -1,11 +1,11 @@
 {
   "name": "Marcus Filipe",
   "handle": "sucram",
-  "role": "Desenvolvedor Full Stack",
-  "headlineStart": "Sistemas sob medida para",
-  "headlineEnd": "empresas e comércios.",
-  "bio": "Desenvolvo sistemas de gestão, PDVs, e-commerces e integrações que resolvem a rotina real do negócio: estoque, caixa, financeiro e atendimento.",
-  "about": "Cuido do projeto inteiro: entendo o processo da empresa, modelo o banco de dados, construo a API e a interface, coloco no ar e dou suporte depois da entrega.",
+  "role": "Desenvolvedor Web Full Stack",
+  "headlineStart": "Sites profissionais que trazem",
+  "headlineEnd": "clientes para o seu negócio.",
+  "bio": "Crio sites rápidos, bonitos e fáceis de achar no Google, feitos para transformar visitas em contatos no WhatsApp. Quando a empresa precisa de mais, desenvolvo também sistemas de gestão e integrações.",
+  "about": "Cuido do projeto inteiro: entendo o negócio, escrevo a estrutura do site, desenho, desenvolvo, registro o domínio, coloco no ar e acompanho depois da entrega. Para quem precisa organizar a rotina, faço também sistemas sob medida, do banco de dados à tela do caixa.",
   "available": true,
   "location": "Maricá, RJ",
   "email": "marcusmftom@gmail.com",
@@ -29,46 +29,46 @@
   ],
   "services": [
     {
+      "title": "Sites para empresas",
+      "text": "Site institucional completo, com páginas de serviços, fotos, mapa, botão de WhatsApp e domínio próprio. Funciona bem no celular e aparece no Google."
+    },
+    {
+      "title": "Landing pages",
+      "text": "Uma página focada em vender um produto ou serviço, ideal para anúncios no Google e no Instagram, com formulário e WhatsApp."
+    },
+    {
+      "title": "Lojas virtuais",
+      "text": "Catálogo ou loja online com carrinho, Pix, cartão e cálculo de frete, ligada ao seu estoque."
+    },
+    {
       "title": "Sistemas de gestão",
-      "text": "ERPs, estoque, financeiro, ordens de serviço e cadastros sob medida para a rotina da empresa."
-    },
-    {
-      "title": "Comércio e PDV",
-      "text": "Frente de caixa, e-commerce, catálogo online, meios de pagamento e emissão de NF-e e NFC-e."
-    },
-    {
-      "title": "Integrações e APIs",
-      "text": "APIs REST, webhooks e automações que conectam o sistema a bancos, marketplaces e ERPs."
-    },
-    {
-      "title": "Dashboards e relatórios",
-      "text": "Painéis com os indicadores do negócio e relatórios exportáveis para a contabilidade."
+      "text": "Quando o site não basta: estoque, caixa, agenda, ordens de serviço, financeiro e integrações sob medida."
     }
   ],
   "phoneDisplay": "(21) 97489-3685",
   "formEndpoint": "https://formsubmit.co/ajax/marcusmftom@gmail.com",
   "en": {
-    "role": "Full Stack Developer",
-    "headlineStart": "Custom software for",
-    "headlineEnd": "businesses and retailers.",
-    "bio": "I build management systems, point-of-sale software, online stores and integrations that fix how a business really runs: inventory, checkout, finance and customer service.",
-    "about": "I handle the whole project: I learn how the business works, design the database, build the API and the interface, deploy it and support it after launch.",
+    "role": "Full Stack Web Developer",
+    "headlineStart": "Professional websites that bring",
+    "headlineEnd": "customers to your business.",
+    "bio": "I build fast, good-looking websites that are easy to find on Google and turn visitors into WhatsApp messages and leads. When a business needs more, I also build management systems and integrations.",
+    "about": "I handle the whole project: I learn how the business works, plan the site structure, design it, build it, set up the domain, launch it and support it afterwards. For businesses that need to organize their operations, I also build custom systems, from the database to the checkout screen.",
     "services": [
       {
+        "title": "Business websites",
+        "text": "A complete company website with service pages, photos, map, WhatsApp button and your own domain. Works great on phones and shows up on Google."
+      },
+      {
+        "title": "Landing pages",
+        "text": "A single page built to sell one product or service, ready for Google and Instagram ads, with a form and WhatsApp."
+      },
+      {
+        "title": "Online stores",
+        "text": "A catalog or online store with cart, card and instant payments and shipping rates, connected to your inventory."
+      },
+      {
         "title": "Management systems",
-        "text": "ERPs, inventory, finance, work orders and records tailored to how your company works."
-      },
-      {
-        "title": "Retail and POS",
-        "text": "Checkout, online stores, catalogs, payment gateways and invoicing."
-      },
-      {
-        "title": "Integrations and APIs",
-        "text": "REST APIs, webhooks and automations that connect your system to banks, marketplaces and ERPs."
-      },
-      {
-        "title": "Dashboards and reports",
-        "text": "Dashboards with your key numbers and reports ready to export for your accountant."
+        "text": "When a website isn't enough: inventory, checkout, scheduling, work orders, finance and custom integrations."
       }
     ]
   }

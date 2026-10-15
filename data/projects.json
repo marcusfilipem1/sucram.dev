@@ -1,16 +1,52 @@
 [
   {
+    "slug": "exemplo-site-clinica",
+    "title": "Site da Clínica Vida Plena (exemplo)",
+    "client": "Clínica com 3 especialidades",
+    "category": "Site institucional",
+    "year": "2026",
+    "status": "Em produção",
+    "featured": true,
+    "summary": "Site institucional com páginas por especialidade, agendamento pelo WhatsApp e mapa, feito para aparecer no Google da região.",
+    "description": "Projeto de exemplo. Edite ou exclua pelo painel /admin.\n\nA clínica dependia só de indicação e de um perfil no Instagram. O novo site apresenta cada especialidade em uma página própria, mostra o corpo clínico e leva o paciente direto para o WhatsApp da recepção com a mensagem pronta.\n\nO site carrega rápido no celular, tem domínio próprio e está cadastrado no Google Meu Negócio, o que faz a clínica aparecer nas buscas do bairro.",
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "SEO"
+    ],
+    "cover": "",
+    "gallery": [],
+    "liveUrl": "",
+    "repoUrl": "",
+    "createdAt": "2026-04-10T12:00:00.000Z",
+    "en": {
+      "title": "Vida Plena Clinic website (example)",
+      "client": "Clinic with 3 specialties",
+      "summary": "Company website with a page per specialty, WhatsApp booking and a map, built to show up in local Google searches.",
+      "description": "Example project. Edit or delete it in the /admin panel.\n\nThe clinic relied only on referrals and an Instagram profile. The new website gives each specialty its own page, introduces the doctors and sends patients straight to the front desk on WhatsApp with a ready-made message.\n\nIt loads fast on phones, uses the clinic's own domain and is linked to its Google Business Profile, so the clinic shows up in neighborhood searches."
+    }
+  },
+  {
     "slug": "exemplo-pdv-padaria",
     "title": "PDV para Padaria Bom Grão (exemplo)",
     "client": "Padaria com 2 lojas",
     "category": "PDV / Comércio",
     "year": "2026",
     "status": "Em produção",
-    "featured": true,
+    "featured": false,
     "summary": "Frente de caixa com balança integrada, emissão de NFC-e e fechamento de caixa por operador.",
     "description": "Projeto de exemplo. Edite ou exclua pelo painel /admin.\n\nAs duas lojas usavam um sistema antigo que travava nos horários de pico e não emitia NFC-e. O novo PDV roda no navegador, lê o código da balança direto no item e funciona offline quando a internet cai, sincronizando as vendas depois.\n\nO fechamento de caixa mostra a conferência por forma de pagamento e o gerente acompanha as vendas das duas lojas pelo celular.",
-    "stack": ["React", "Node.js", "PostgreSQL", "NFC-e"],
-    "cover": "", "gallery": [], "liveUrl": "", "repoUrl": "",
+    "stack": [
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "NFC-e"
+    ],
+    "cover": "",
+    "gallery": [],
+    "liveUrl": "",
+    "repoUrl": "",
     "createdAt": "2026-03-02T12:00:00.000Z"
   },
   {
@@ -23,8 +59,15 @@
     "featured": false,
     "summary": "Entradas pelo XML da nota fiscal, transferência entre depósitos e alerta de estoque mínimo.",
     "description": "Projeto de exemplo. Edite ou exclua pelo painel /admin.\n\nO controle era feito em planilhas e a loja perdia vendas por falta de produto. O sistema importa as notas de entrada pelo XML, registra transferências entre os três depósitos e avisa o comprador quando um item chega ao estoque mínimo.",
-    "stack": ["PHP", "Laravel", "MySQL"],
-    "cover": "", "gallery": [], "liveUrl": "", "repoUrl": "",
+    "stack": [
+      "PHP",
+      "Laravel",
+      "MySQL"
+    ],
+    "cover": "",
+    "gallery": [],
+    "liveUrl": "",
+    "repoUrl": "",
     "createdAt": "2025-08-15T12:00:00.000Z"
   },
   {
@@ -37,8 +80,16 @@
     "featured": false,
     "summary": "Sincroniza preço e estoque do ERP da loja com Mercado Livre e Shopee a cada 5 minutos.",
     "description": "Projeto de exemplo. Edite ou exclua pelo painel /admin.\n\nA loja cadastrava cada anúncio à mão e vendia peças que já tinham acabado. A integração lê o ERP, atualiza preço e estoque nos marketplaces e importa os pedidos de volta para o faturamento.",
-    "stack": ["Node.js", "TypeScript", "Redis", "Docker"],
-    "cover": "", "gallery": [], "liveUrl": "", "repoUrl": "",
+    "stack": [
+      "Node.js",
+      "TypeScript",
+      "Redis",
+      "Docker"
+    ],
+    "cover": "",
+    "gallery": [],
+    "liveUrl": "",
+    "repoUrl": "",
     "createdAt": "2026-07-20T12:00:00.000Z"
   }
 ]
