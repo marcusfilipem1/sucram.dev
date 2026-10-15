@@ -29,7 +29,7 @@ const SEG = {
     bars: [60, 75, 80, 50, 90, 85, 40], tag: [["Lembrete enviado no WhatsApp", "WhatsApp reminder sent"], ["3 horários livres amanhã", "3 open slots tomorrow"]],
   },
   oficina: {
-    label: ["Oficina ou assistência", "Repair shop"], company: "Auto Center Maricá",
+    label: ["Oficina ou assistência", "Repair shop"], company: "Auto Center Prime",
     modules: ["Ordens de serviço", "Estoque", "Clientes", "Financeiro"],
     kpis: [[["OS abertas", "Open work orders"], ["14", "14"]], [["Concluídas hoje", "Done today"], ["6", "6"]], [["Faturamento", "Revenue"], ["R$ 9.180", "$ 9,180"]]],
     rows: [[["OS 2291 · Troca de embreagem", "WO 2291 · Clutch replacement"], ["Em execução", "In progress"]], [["OS 2290 · Revisão 40 mil km", "WO 2290 · 25k-mile service"], ["Pronta", "Ready"]], [["OS 2288 · Alinhamento", "WO 2288 · Wheel alignment"], ["Pronta", "Ready"]], [["OS 2287 · Freios dianteiros", "WO 2287 · Front brakes"], ["Aguardando peça", "Waiting for part"]]],
@@ -39,7 +39,7 @@ const SEG = {
     label: ["Restaurante ou delivery", "Restaurant or delivery"], company: "Cantina da Orla",
     modules: ["Vendas / PDV", "Delivery", "Estoque", "Financeiro"],
     kpis: [[["Pedidos hoje", "Orders today"], ["186", "186"]], [["Delivery", "Delivery"], ["74", "74"]], [["Ticket médio", "Avg. ticket"], ["R$ 48,90", "$ 48.90"]]],
-    rows: [[["Mesa 12 · 4 pessoas", "Table 12 · 4 guests"], ["R$ 236,00", "$ 236.00"]], [["Delivery #881 · Itaipuaçu", "Delivery #881 · Downtown"], ["Saiu", "Out"]], [["Balcão · 2 pratos do dia", "Counter · 2 daily specials"], ["R$ 59,80", "$ 59.80"]], [["Delivery #882 · Centro", "Delivery #882 · Beach"], ["Preparando", "Preparing"]]],
+    rows: [[["Mesa 12 · 4 pessoas", "Table 12 · 4 guests"], ["R$ 236,00", "$ 236.00"]], [["Delivery #881 · Jardim", "Delivery #881 · Downtown"], ["Saiu", "Out"]], [["Balcão · 2 pratos do dia", "Counter · 2 daily specials"], ["R$ 59,80", "$ 59.80"]], [["Delivery #882 · Centro", "Delivery #882 · Beach"], ["Preparando", "Preparing"]]],
     bars: [20, 35, 85, 95, 40, 70, 90], tag: [["Novo pedido no delivery", "New delivery order"], ["Cozinha: 6 pedidos na fila", "Kitchen: 6 orders queued"]],
   },
 };
@@ -62,7 +62,7 @@ const secName = (x) => (en() ? SECTIONS[x] || x : x);
 const COLORS = [["#1d4ed8", "Azul", "Blue"], ["#0f766e", "Verde", "Green"], ["#b4232c", "Vermelho", "Red"], ["#7c3aed", "Roxo", "Purple"], ["#c2410c", "Laranja", "Orange"]];
 const SITE = {
   padaria: {
-    kicker: ["Padaria artesanal em Maricá", "Artisan bakery"], tagline: ["Pão quentinho saindo do forno o dia todo", "Fresh bread out of the oven all day"],
+    kicker: ["Padaria artesanal", "Artisan bakery"], tagline: ["Pão quentinho saindo do forno o dia todo", "Fresh bread out of the oven all day"],
     cta: ["Encomendar pelo WhatsApp", "Order on WhatsApp"], color: "#c2410c",
     items: [[["Pães artesanais", "Artisan bread"], ["R$ 14,90", "$ 14.90"]], [["Bolos e tortas", "Cakes and pies"], ["R$ 42,90", "$ 42.90"]], [["Salgados para festa", "Party snacks"], ["R$ 90,00", "$ 90.00"]]],
     sections: ["Cardápio / produtos", "Galeria de fotos", "Mapa e horário", "Botão de WhatsApp"],

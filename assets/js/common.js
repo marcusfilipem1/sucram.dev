@@ -56,7 +56,7 @@ export function homeHTML(profile, projects) {
   <header class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <div class="label">${esc(role)} · ${esc(profile.location)}</div>
+        <div class="label">${t("hero_label")}</div>
         <h1>${esc(pick(profile, "headlineStart"))} <em>${esc(pick(profile, "headlineEnd"))}</em></h1>
         <p class="lead">${esc(pick(profile, "bio"))}</p>
         <div class="btns">
@@ -151,7 +151,7 @@ export function footerHTML(profile, base = "./") {
     <div class="foot-brand">
       <a class="brand" href="${base}">${brandHTML(profile.handle)}</a>
       <p>${t("footer_tagline")}</p>
-      <p class="label">${esc(profile.location)} · ${curLang() === "en" ? "UTC−3" : "Brasília"}</p>
+      <p class="label">${esc(pick(profile, "location"))}</p>
     </div>
     <div><div class="label foot-h">${t("footer_contact")}</div><ul class="channels">${contacts}</ul></div>
     <div><div class="label foot-h">${t("footer_nav")}</div><ul class="foot-links">
