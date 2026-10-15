@@ -276,6 +276,62 @@ fieldset.field legend { font-size: 13.5px; font-weight: 500; padding: 0; margin-
 .mod input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sim-view { min-width: 0; padding-bottom: 14px; }
 
+
+/* abas do simulador e cores */
+.sim-tabs { grid-column: 1 / -1; display: inline-flex; justify-self: start; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); }
+.sim-tabs button { font: 600 14px/1 var(--body); border: 0; background: transparent; color: var(--muted); padding: 10px 18px; border-radius: 999px; cursor: pointer; }
+.sim-tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+.swatches { display: flex; gap: 10px; }
+.swatch { position: relative; cursor: pointer; }
+.swatch input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.swatch span { display: block; width: 30px; height: 30px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.swatch input:checked + span { box-shadow: 0 0 0 2px var(--ink); }
+.swatch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* maquete de site: tem a própria paleta, como um site de verdade */
+.site-mock { --sc: #1d4ed8; background: #fff; color: #1b1f27; border-color: var(--line); transition: opacity .35s; }
+.site-mock.fade { opacity: 0; }
+.site-mock .mock-bar { border-color: #e6e9ef; }
+.site-mock .mock-bar i { background: #dde1e8; }
+.site-mock .mock-url { background: #f1f3f7; color: #5b6475; }
+.sm-nav { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-bottom: 1px solid #eef0f4; font-size: 11.5px; color: #5b6475; white-space: nowrap; overflow: hidden; }
+.sm-nav b { font-family: var(--display); font-size: 14px; color: var(--sc); margin-right: auto; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.sm-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; align-items: center; padding: 18px 16px; background: color-mix(in srgb, var(--sc) 8%, #fff); }
+.sm-hero small { display: block; font: 600 10.5px/1.3 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--sc); margin-bottom: 6px; }
+.sm-hero h4 { font-family: var(--display); font-size: clamp(17px, 2vw, 21px); line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em; }
+.sm-btn { display: inline-block; background: var(--sc); color: #fff; font-weight: 600; font-size: 11.5px; padding: 7px 12px; border-radius: 6px; }
+.sm-img { position: relative; aspect-ratio: 4 / 3; border-radius: 10px; background: linear-gradient(135deg, color-mix(in srgb, var(--sc) 70%, #fff), var(--sc)); overflow: hidden; }
+.sm-img i { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, .28); }
+.sm-img i:first-child { width: 46%; aspect-ratio: 1; right: -8%; top: -10%; }
+.sm-img i:last-child { width: 30%; aspect-ratio: 1; left: 12%; bottom: -8%; background: rgba(255, 255, 255, .18); }
+.sm-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px 16px 18px; }
+.sm-sec { border: 1px solid #eef0f4; border-radius: 8px; padding: 10px; min-width: 0; font-size: 11px; }
+.sm-sec h5 { margin: 0 0 8px; font: 700 11.5px/1.2 var(--body); color: #1b1f27; }
+.sm-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.sm-cards div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sm-cards i { display: block; aspect-ratio: 4 / 3; border-radius: 5px; background: color-mix(in srgb, var(--sc) 18%, #fff); }
+.sm-cards span, .sm-row span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #3d4452; }
+.sm-cards b { font-size: 10.5px; }
+.sm-cards em { font-style: normal; font-size: 10px; text-align: center; color: #fff; background: var(--sc); border-radius: 4px; padding: 2px 0; }
+.sm-row { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dashed #e6e9ef; }
+.sm-row b { white-space: nowrap; color: var(--sc); }
+.sm-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.sm-gallery i { aspect-ratio: 1; border-radius: 4px; background: color-mix(in srgb, var(--sc) 30%, #fff); }
+.sm-gallery i:nth-child(2n) { background: color-mix(in srgb, var(--sc) 55%, #fff); }
+.sm-slots { display: flex; flex-wrap: wrap; gap: 4px; }
+.sm-slots span { border: 1px solid #e1e5ec; border-radius: 4px; padding: 3px 6px; font-family: var(--mono); font-size: 10px; }
+.sm-slots span.on { background: var(--sc); border-color: var(--sc); color: #fff; }
+.sm-stars { color: #e3a008; font-size: 13px; letter-spacing: 1px; }
+.sm-stars small { color: #5b6475; font-size: 10.5px; letter-spacing: 0; }
+.sm-lines { display: grid; gap: 5px; margin-top: 6px; }
+.sm-lines i { height: 6px; border-radius: 3px; background: #edf0f5; }
+.sm-lines i:last-child { width: 60%; }
+.sm-map { height: 46px; border-radius: 6px; position: relative; background-color: #eef2ec; background-image: linear-gradient(#dde4d8 1px, transparent 1px), linear-gradient(90deg, #dde4d8 1px, transparent 1px); background-size: 12px 12px; }
+.sm-map i { position: absolute; left: 50%; top: 40%; width: 12px; height: 12px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--sc); }
+.sm-hours { display: block; margin-top: 5px; color: #5b6475; }
+.sm-wa { position: absolute; right: 14px; bottom: 14px; background: #1fa855; color: #fff; font: 600 11px/1 var(--body); padding: 8px 12px; border-radius: 999px; box-shadow: 0 6px 16px rgba(0, 0, 0, .18); }
+@media (max-width: 560px) { .sm-hero { grid-template-columns: 1fr; } .sm-img { display: none; } .sm-body { grid-template-columns: 1fr; } .sm-nav span:nth-of-type(n+3) { display: none; } }
+
 /* etapas */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 0; border-top: 1px solid var(--ink); counter-reset: s; }
 .steps li { padding: 20px 22px 22px 0; border-bottom: 1px solid var(--line); position: relative; }
