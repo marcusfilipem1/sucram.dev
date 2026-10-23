@@ -47,6 +47,17 @@ function coverHTML(p) {
 }
 
 /* ---------- página inicial ---------- */
+const PERK_ICONS = {
+  "ruler": "<path d=\"M4 20 20 4M7 17l2 2M10 14l2 2M13 11l2 2M16 8l2 2\"/>",
+  "phone": "<rect x=\"7\" y=\"2.5\" width=\"10\" height=\"19\" rx=\"2.5\"/><path d=\"M11 18.5h2\"/>",
+  "search": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"m16 16 4.5 4.5\"/>",
+  "chat": "<path d=\"M4 19.5 5.3 16A8 8 0 1 1 8 18.7z\"/><path d=\"M9 10.5c.5 2 2 3.5 4 4\"/>",
+  "globe": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9S14.5 18.4 12 21c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z\"/>",
+  "bolt": "<path d=\"M13 2.5 5 13.5h6l-1 8 8-11h-6z\"/>",
+  "edit": "<path d=\"M4 20h4L19 9l-4-4L4 16z\"/><path d=\"m13.5 6.5 4 4\"/>",
+  "hand": "<path d=\"M12 21s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7.5 2.8C19.5 16.4 12 21 12 21z\"/>"
+};
+
 export function homeHTML(profile, projects) {
   const live = Number.isFinite(profile.inProduction) ? profile.inProduction : projects.filter((p) => p.status === "Em produção").length;
   const segments = t("segments");
@@ -86,10 +97,10 @@ export function homeHTML(profile, projects) {
     </div>
   </section>
 
-  <section id="simulador" class="band">
+  <section id="incluso" class="band">
     <div class="wrap">
-      <div class="sec-head"><div><div class="label">${t("sim_label")}</div><h2>${t("sim_title")}</h2><p class="sub">${t("sim_sub")}</p></div></div>
-      <div class="sim" data-sim></div>
+      <div class="sec-head"><div><div class="label">${t("perks_label")}</div><h2>${t("perks_title")}</h2><p class="sub">${t("perks_sub")}</p></div></div>
+      <ul class="perks">${t("perks").map(([icon, title, text]) => `<li><svg class="perk-ic" viewBox="0 0 24 24" aria-hidden="true">${PERK_ICONS[icon] || ""}</svg><h3>${title}</h3><p>${text}</p></li>`).join("")}</ul>
     </div>
   </section>
 
@@ -152,7 +163,7 @@ export function footerHTML(profile, base = "./") {
     <div><div class="label foot-h">${t("footer_contact")}</div><ul class="channels">${contacts}</ul></div>
     <div><div class="label foot-h">${t("footer_nav")}</div><ul class="foot-links">
       <li><a href="${base}#projetos">${t("nav_projects")}</a></li>
-      <li><a href="${base}#simulador">${t("nav_sim")}</a></li>
+      <li><a href="${base}#servicos">${t("nav_services")}</a></li>
       <li><a href="${base}#faq">${t("nav_faq")}</a></li>
       <li><button class="link" data-quote>${t("nav_quote")}</button></li>
       <li><a href="#" data-lang-switch data-lang-full></a></li>
