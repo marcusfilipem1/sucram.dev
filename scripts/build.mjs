@@ -74,7 +74,7 @@ function shell({ lang, path, title, description, main, script, ld = [], image, t
       <a class="brand" id="brand" href="${home}" aria-label="${esc(profile.handle)}.dev">${brandHTML(profile.handle)}</a>
       <ul>
         <li><a href="${anchor("projetos")}" data-i18n="nav_projects">${t("nav_projects")}</a></li>
-        <li class="hide-sm"><a href="${anchor("simulador")}" data-i18n="nav_sim">${t("nav_sim")}</a></li>
+        <li class="hide-sm"><a href="${anchor("servicos")}" data-i18n="nav_services">${t("nav_services")}</a></li>
         <li class="hide-sm"><a href="${anchor("faq")}" data-i18n="nav_faq">${t("nav_faq")}</a></li>
         <li class="hide-sm"><a href="${anchor("contato")}" data-i18n="nav_contact">${t("nav_contact")}</a></li>
         <li><a class="lang-btn" href="${altPath(path, other)}" hreflang="${other === "en" ? "en" : "pt-BR"}" lang="${other === "en" ? "en" : "pt-BR"}" aria-label="${t("lang_switch_label")}" data-lang-switch>${t("lang_switch")}</a></li>
