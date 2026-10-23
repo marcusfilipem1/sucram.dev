@@ -83,6 +83,7 @@ const STR = {
     back: "← Todos os projetos", not_found: "Projeto não encontrado", f_client: "Cliente", f_category: "Categoria", f_year: "Ano", f_code: "Registro",
     open_system: "Ver no ar ↗", see_code: "Ver código ↗", tech: "Tecnologias", cta_title: "Precisa de algo parecido?", cta_text: "Conte sobre a sua empresa e eu monto uma proposta.", cta_btn: "Quero um projeto assim",
     cover_alt: (t) => `Tela do projeto ${t}`,
+    visit_site: "Visitar site ↗", visit_label: (t) => `Visitar o site ${t} (abre em nova aba)`, details: "Detalhes →",
     // formulário
     modal_label: "Orçamento sem compromisso", modal_title: "Conte sobre o seu projeto", close: "Fechar",
     f_name: "Nome", f_company: "Empresa", f_email: "E-mail", f_phone: "WhatsApp", f_country: "País", f_type: "Tipo de projeto", f_msg: "Conte sobre o projeto",
@@ -150,6 +151,7 @@ const STR = {
     back: "← All projects", not_found: "Project not found", f_client: "Client", f_category: "Category", f_year: "Year", f_code: "Record",
     open_system: "See it live ↗", see_code: "View code ↗", tech: "Technologies", cta_title: "Need something similar?", cta_text: "Tell me about your business and I'll put together a proposal.", cta_btn: "I want a project like this",
     cover_alt: (t) => `Screenshot of ${t}`,
+    visit_site: "Visit website ↗", visit_label: (t) => `Visit the ${t} website (opens in a new tab)`, details: "Details →",
     modal_label: "Free quote", modal_title: "Tell me about your project", close: "Close",
     f_name: "Name", f_company: "Company", f_email: "Email", f_phone: "WhatsApp / phone", f_country: "Country", f_type: "Project type", f_msg: "About the project",
     f_msg_ph: "What your business does, who your customers are and what the website or system needs.",

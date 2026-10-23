@@ -40,10 +40,15 @@ export const stackHTML = (stack = []) => `<div class="stack">${stack.map((s) => 
 export const waLink = (profile, text = t("wa_default")) =>
   `https://wa.me/${String(profile.whatsapp || "").replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
+// link do site no ar (só http/https) e imagem do card: capa enviada pelo painel ou, sem capa, uma prévia automática do site
+export const liveLink = (p) => (/^https?:\/\/[^\s"'<>]+$/i.test(p?.liveUrl || "") ? p.liveUrl : "");
+export const hostName = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return ""; } };
+export const previewSrc = (p) => (safeUrl(p.cover) ? assetUrl(p.cover) : liveLink(p) ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(liveLink(p))}?w=1200&h=750` : "");
+
 function coverHTML(p) {
-  const src = safeUrl(p.cover);
+  const src = previewSrc(p);
   const title = pick(p, "title");
-  return `<div class="cover">${src ? `<img src="${esc(assetUrl(src))}" alt="${esc(t("cover_alt")(title))}" loading="lazy">` : `<div class="ph">${esc(initials(title))}</div>`}</div>`;
+  return `<div class="cover"><div class="ph">${esc(initials(title))}</div>${src ? `<img src="${esc(src)}" alt="${esc(t("cover_alt")(title))}" loading="lazy" onerror="this.remove()">` : ""}</div>`;
 }
 
 /* ---------- página inicial ---------- */
@@ -175,16 +180,20 @@ export function footerHTML(profile, base = "./") {
 export function gridHTML(projects, href) {
   if (!projects.length) return `<div class="empty">${t("empty")}</div>`;
   return projects.map((p) => `
-    <a class="card" href="${href(p.slug)}" data-slug="${esc(p.slug)}">
+    <article class="card" data-slug="${esc(p.slug)}">
       ${coverHTML(p)}
       <div class="card-body">
         <div class="card-top"><span class="code">${esc(p.code || "")}</span>${statusPill(p.status)}</div>
-        <h3>${esc(pick(p, "title"))}</h3>
+        <h3><a class="card-link" href="${href(p.slug)}">${esc(pick(p, "title"))}</a></h3>
         <div class="card-meta">${esc([tData(p.category), p.year].filter(Boolean).join(" · "))}</div>
         <p>${esc(pick(p, "summary") || "")}</p>
         ${stackHTML(p.stack)}
+        <div class="card-actions">
+          ${liveLink(p) ? `<a class="btn primary sm visit" href="${esc(liveLink(p))}" target="_blank" rel="noopener" aria-label="${esc(t("visit_label")(pick(p, "title")))}">${t("visit_site")}</a><span class="host">${esc(hostName(liveLink(p)))}</span>` : ""}
+          <span class="more">${t("details")}</span>
+        </div>
       </div>
-    </a>`).join("");
+    </article>`).join("");
 }
 
 // portfólio: todos os projetos de uma vez, sem filtros
@@ -198,7 +207,7 @@ export function projectHTML(p, backHref) {
   const title = pick(p, "title");
   const facts = [[t("f_client"), pick(p, "client")], [t("f_category"), tData(p.category)], [t("f_year"), p.year], [t("f_code"), p.code]].filter(([, v]) => v);
   const actions = [];
-  if (safeUrl(p.liveUrl)) actions.push(`<a class="btn" href="${esc(p.liveUrl)}" target="_blank" rel="noopener">${t("open_system")}</a>`);
+  if (liveLink(p)) actions.push(`<a class="btn primary" href="${esc(liveLink(p))}" target="_blank" rel="noopener">${t("visit_site")}</a>`);
   if (safeUrl(p.repoUrl)) actions.push(`<a class="btn" href="${esc(p.repoUrl)}" target="_blank" rel="noopener">${t("see_code")}</a>`);
   const paragraphs = String(pick(p, "description") || pick(p, "summary") || "").split(/\n{2,}/).map((x) => `<p>${esc(x).replace(/\n/g, "<br>")}</p>`).join("");
   const gallery = (p.gallery || []).filter(safeUrl);
@@ -209,7 +218,7 @@ export function projectHTML(p, backHref) {
     <h1>${esc(title)}</h1>
     <p class="lead">${esc(pick(p, "summary") || "")}</p>
     <dl class="facts">${facts.map(([k, v]) => `<div><dt class="label">${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-    ${safeUrl(p.cover) ? `<div class="p-cover"><img src="${esc(assetUrl(p.cover))}" alt="${esc(t("cover_alt")(title))}"></div>` : ""}
+    ${previewSrc(p) ? `<div class="p-cover"><img src="${esc(previewSrc(p))}" alt="${esc(t("cover_alt")(title))}" onerror="this.parentNode.remove()"></div>` : ""}
     <div class="p-body">
       <div class="prose">${paragraphs}</div>
       <aside class="p-aside">

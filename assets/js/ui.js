@@ -1,5 +1,5 @@
 // Partes interativas: vitrine de projetos do topo, formulário de orçamento e botão de WhatsApp.
-import { esc, waLink, statusPill, assetUrl, safeUrl } from "./common.js";
+import { esc, waLink, statusPill, previewSrc } from "./common.js";
 import { t, curLang, pick, tData } from "./i18n.js";
 
 const reduceMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -13,9 +13,9 @@ const hostOf = (p) => { try { return new URL(p.liveUrl).hostname.replace(/^www\.
 
 function deckCard(p, i, href) {
   const title = pick(p, "title");
-  const cover = safeUrl(p.cover) ? assetUrl(p.cover) : "";
+  const cover = previewSrc(p);
   const art = cover
-    ? `<img src="${esc(cover)}" alt="${esc(t("cover_alt")(title))}" loading="${i ? "lazy" : "eager"}">`
+    ? `<img src="${esc(cover)}" alt="${esc(t("cover_alt")(title))}" loading="${i ? "lazy" : "eager"}" onerror="this.remove()">`
     : `<div class="dk-art" style="--h:${hueOf(p.slug)}" aria-hidden="true"><i></i><i></i><span>${esc(tData(p.category) || "")}</span><b>${esc(title.replace(/\s*\((exemplo|example)\)\s*$/i, ""))}</b></div>`;
   return `
     <a class="dk-card" href="${href(p.slug)}" data-pos="${i}" ${i ? 'tabindex="-1" aria-hidden="true"' : ""}>
