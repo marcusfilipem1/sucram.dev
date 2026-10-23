@@ -50,7 +50,7 @@ export const adminHTML = () => `
       ${field("f-description", "Descrição completa", `<textarea id="f-description" placeholder="Contexto do cliente, o que foi desenvolvido e os resultados. Deixe uma linha em branco para começar um novo parágrafo."></textarea>`)}
       ${field("f-stack", "Tecnologias, separadas por vírgula", `<input id="f-stack" placeholder="React, Node.js, PostgreSQL">`)}
       <div class="row">
-        ${field("f-live", "Link do sistema online", `<input id="f-live" type="url" placeholder="https://…">`)}
+        ${field("f-live", "Link do site no ar (aparece no portfólio com o botão Visitar site)", `<input id="f-live" type="url" placeholder="https://seusite.com.br">`)}
         ${field("f-repo", "Link do código", `<input id="f-repo" type="url" placeholder="https://github.com/…">`)}
       </div>
       <details class="en-box">
